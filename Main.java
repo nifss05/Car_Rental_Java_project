@@ -1,8 +1,7 @@
 package Car_Rental_Java_project;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
 
 class Car {
     private String carId;
@@ -91,8 +90,55 @@ class Rental {
 
 }
 
+class carRentalSystem {
+    private List<Car> cars;
+    private List<Customer> customers;
+    private List<Rental> rentals;
+
+    public carRentalSystem() {
+        cars = new ArrayList<>();
+        customers = new ArrayList<>();
+        rentals = new ArrayList<>();
+    }
+
+    public void addCars(Car car) {
+        cars.add(car);
+    }
+
+    public void addCustomer(Customer customer) {
+        customers.add(customer);
+    }
+
+    public void rentCar(Car car, Customer customer, int rentalDays) {
+        if (car.isAvailable()) {
+            car.rent();
+            rentals.add(new Rental(car, customer, rentalDays));
+        } else {
+            System.out.println("Car is not available for rent.");
+        }
+    }
+
+    public void returnCar(Car car) {
+        Rental rentalToRemove = null;
+        for (Rental rental : rentals) {
+            if (rental.getCar() == car) {
+                rentalToRemove = rental;
+                break;
+            }
+            if (rentalToRemove != null) {
+                rentals.remove(rentalToRemove);
+            }
+            car.returnCar();
+        }
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
+
+        Car car1 = new Car("101", "Benze", "S1", 1200);
+        Car car2 = new Car("102", "TATA", "S2", 800);
+        Car car3 = new Car("103", "BMW", "S3", 1500);
 
     }
 }
